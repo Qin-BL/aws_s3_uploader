@@ -1,0 +1,21 @@
+@startuml
+'https://plantuml.com/deployment-diagram
+
+cloud robox
+node media_service
+queue vr_queue #text:blue [
+vr_queue
+]
+node vr_executor
+cloud website
+cloud aws
+
+media_service --> robox
+robox --> media_service
+robox --> vr_queue: parts
+vr_executor <-- vr_queue: part
+website <-- vr_executor
+website --> vr_executor: signed_url
+aws <-- vr_executor: file
+
+@enduml

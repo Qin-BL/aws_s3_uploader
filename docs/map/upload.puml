@@ -1,0 +1,21 @@
+@startuml
+'https://plantuml.com/deployment-diagram
+
+cloud cloud
+component nimbo
+component robox
+component controller
+database couchbase
+
+'upload'
+cloud <-- robox
+robox <-- nimbo
+nimbo <-- controller
+'couchbase'
+couchbase <-- nimbo: upload status
+couchbase --> nimbo
+'success'
+cloud --> robox: success
+robox --> nimbo: success
+nimbo --> controller: success
+@enduml

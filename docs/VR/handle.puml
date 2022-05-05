@@ -1,0 +1,31 @@
+@startuml
+'https://plantuml.com/activity-diagram-beta
+
+start
+:part;
+if (expire?) then (false)
+  :presign url;
+  if (success?) then (yes)
+    if (has part_res?) then (no)
+      :upload to aws;
+    endif
+    if (all part handled?) then (yes)
+      :complete;
+      if (complete success?) then (yes)
+        :clear;
+        stop
+      else
+        :reenqueue;
+        stop
+      endif
+    endif
+  else (no)
+    :reenqueue;
+    stop
+  endif
+else (true)
+  :clear;
+  stop
+endif
+stop
+@enduml
